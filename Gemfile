@@ -11,6 +11,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'guard-rspec'
+  gem 'shoulda-matchers', '~> 4.2.0'
 end
 
 group :development do
