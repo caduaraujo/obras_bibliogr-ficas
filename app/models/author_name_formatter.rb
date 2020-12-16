@@ -3,37 +3,46 @@ class AuthorNameFormatter
   NICKNAMES = %w[FILHO FILHA NETO NETA SOBRINHO SOBRINHA JUNIOR].freeze
   ARTICLES = %w[da de do das dos].freeze
 
-  attr_accessor :full_name
+  attr_accessor :names, :size
 
   def initialize(full_name)
-    @full_name = full_name
+    @names = full_name.split(/\s/)
+    @size = names.size
   end
 
   def formatted_name
-    adjust_articles.last.upcase + ', ' + adjust_articles.first
+    last_name + ', ' + first_name
   end
 
   private
 
-  def adjust_articles
-    names_to_array = full_name.split(/\s/) # split in array of words
-    size = names_to_array.size
+  def first_name
+    name = ''
 
-    if size > 2 && NICKNAMES.include?(names_to_array.last.upcase)
-      names_to_array[size -1] = names_to_array[size - 2] + " " + names_to_array.last
-      names_to_array.delete(size - 2)
-    end
-
-    names_to_array.each do |word|
+    names.each_with_index do |word, index|
       word.downcase!
       word.capitalize! unless ARTICLES.include?(word)
-    end
-
-    names_to_array.each_with_index do |word, index|
-      if ARTICLES.include?(word.downcase) && index.positive?
-        names_to_array[index - 1] = names_to_array[index - 1] + " " + word
-        names_to_array.delete(index)
+      if index.zero?
+        name = names.first
+      elsif index < (size - 1) && !nickname_on_last_name?
+        name = name + ' ' + word
+      elsif index < (size - 2)
+        name = name + ' ' + word
       end
     end
+    name
+  end
+
+  def last_name
+    if nickname_on_last_name?
+      (names[size - 2] + ' ' + names.last).upcase
+    else
+      names.last.upcase
+    end
+  end
+
+
+  def nickname_on_last_name?
+    size > 2 && NICKNAMES.include?(names.last.upcase)
   end
 end
