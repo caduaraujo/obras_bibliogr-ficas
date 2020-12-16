@@ -1,6 +1,5 @@
 class V1::AuthorsController < ApplicationController
   def create
-    byebug
     formatted_name = AuthorNameFormatter.new(permitted_params['author']).formatted_name
     Author.create(full_name: @formatted_name) unless Author.exists?(full_name: formatted_name)
 
