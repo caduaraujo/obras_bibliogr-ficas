@@ -1,24 +1,51 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby: 2.7.2
+* Rails: 6.0.3.4
+* Postgres
 
-Things you may want to cover:
+## Configuração
+Clone o projeto: https://github.com/caduaraujo/obras_bibliogr-ficas
 
-* Ruby version
+### Usando docker:
 
-* System dependencies
+Estando na pasta do projeto, tendo o docker configurado em sua máquina, executar no terminal:
+docker-compose build
 
-* Configuration
+Executar para criar o banco de dados e a migração:
+docker-compose web rails db:create db:migrate
 
-* Database creation
+Subir a aplicação local:
 
-* Database initialization
+```docker-compose up```
 
-* How to run the test suite
+#### Rodando os testes
+``` docker-compose web rspec```
 
-* Services (job queues, cache servers, search engines, etc.)
+### Direto na sua máquina:
+ - Instale as gems:
+  ```bundle install```
 
-* Deployment instructions
+ - Configure o banco de dados:
+ ```rails db:create```
+ ```rails db:migrate```
 
-* ...
+- Subir a aplicação local
+```rails s```
+
+#### Rodando os testes
+``` rspec```
+
+
+* Endpoint que salva no banco os autores já consultados e sempre devolve um nome formatado:
+ - Content type application/json
+ - v1/authors/:.
+
+Testando localmente via curl:
+*Post*
+
+```curl --data "author=Machado de Assis" POST http://localhost:3000/v1/authors/```
+
+Sample 
+
+```{ author: 'Machado de Assis' }```
