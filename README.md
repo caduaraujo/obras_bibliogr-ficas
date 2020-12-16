@@ -36,10 +36,10 @@ Subir a aplicação local:
 #### Rodando os testes
 ``` rspec```
 
-
-* Endpoint que salva no banco os autores já consultados e sempre devolve um nome formatado:
- - Content type application/json
- - v1/authors/:.
+### Endpoint
+Esse ednpoint que salva no banco os autores já consultados e sempre devolve um nome formatado:
+ - typo: Content type application/json
+ - rota: v1/authors/:.
 
 Testando localmente via curl:
 *Post*
